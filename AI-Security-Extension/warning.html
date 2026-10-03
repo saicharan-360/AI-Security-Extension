@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Warning - AI Shield</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151d2f;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.25);
+      --warning: #f59e0b;
+      --primary: #3b82f6;
+      --border: #243048;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .warning-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 620px;
+      width: 100%;
+      padding: 36px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 50px var(--danger-glow);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .site-card {
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    .site-card-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .site-card-domain {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+
+    .risk-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .risk-badge {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .reasons-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .reasons-list {
+      list-style-type: none;
+      margin-bottom: 28px;
+    }
+
+    .reasons-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .reasons-list li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: var(--danger);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    .btn-secondary {
+      background: #374151;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    .btn-danger-bypass {
+      background: transparent;
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      font-size: 13px;
+      padding: 8px 16px;
+      margin-top: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .btn-danger-bypass:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .bypass-section {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="warning-container">
+    <div class="header-badge">
+      <span>🛡️ AI Security Shield Interstitial</span>
+    </div>
+
+    <h1>⚠️ Deceptive or Malicious Site Blocked</h1>
+
+    <div class="site-card">
+      <div class="site-card-label">Target Domain</div>
+      <div class="site-card-domain" id="targetDomain">Loading...</div>
+      <div class="risk-meta">
+        <span>Risk Level: <strong class="risk-badge" id="riskLevel">HIGH_RISK</strong></span>
+        <span>Confidence: <strong id="confidenceScore">95%</strong></span>
+      </div>
+    </div>
+
+    <div class="reasons-title">Detected Indicators:</div>
+    <ul class="reasons-list" id="reasonsList">
+      <li>Analyzing threat data...</li>
+    </ul>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="btnGoBack">← Back to Safety</button>
+      <button class="btn btn-secondary" id="btnCloseTab">Close Tab</button>
+    </div>
+
+    <div class="bypass-section">
+      <p>If you believe this site was misclassified or you understand the risks:</p>
+      <button class="btn-danger-bypass" id="btnProceed">Proceed to Site Anyway (Not Recommended)</button>
+    </div>
+  </div>
+
+  <script type="module" src="warning.js"></script>
+</body>
+</html>
