@@ -3,7 +3,7 @@
  * Securely communicates with Google Generative Language API using server credentials.
  */
 
-const GEMINI_MODEL = 'gemini-1.5-flash';
+const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 class GeminiService {
@@ -56,10 +56,13 @@ JSON Output Schema:
     const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 second strict timeout
 
     try {
-      const endpoint = `${GEMINI_API_BASE}/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(this.apiKey.trim())}`;
+      const endpoint = `${GEMINI_API_BASE}/${GEMINI_MODEL}:generateContent`;
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': this.apiKey.trim()
+        },
         signal: controller.signal,
         body: JSON.stringify({
           contents: [

@@ -7,14 +7,17 @@ if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === '') {
   process.exit(1);
 }
 
-const GEMINI_API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(GEMINI_API_KEY.trim())}`;
+const GEMINI_API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent`;
 
 async function test() {
   console.log('Testing Gemini API connectivity...');
   try {
     const response = await fetch(GEMINI_API_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': GEMINI_API_KEY.trim()
+      },
       body: JSON.stringify({
         contents: [{ parts: [{ text: "Hello, reply with just 'OK'" }] }]
       })
